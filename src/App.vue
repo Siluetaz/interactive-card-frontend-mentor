@@ -1,16 +1,20 @@
 <script setup>
+import { ref, onMounted } from 'vue'
 import CardFront from "./components/Card-front.vue";
 import CardBack from "./components/Card-back.vue";
 
+onMounted(() => {
+  //document.getElementById("round").style.border = "1px solid hsl(278, 68%, 11%)";
+})
 
 </script>
 
 <template>
   <div class="container">
-    <section class="left-side">
+    <div class="left-side">
       <div class="bg-mask"><img class="bg-desktop" src="../images/bg-main-desktop.png" /></div>
-    </section>
-    <section class="right-side">
+    </div>
+    <div class="right-side">
       <div class="form-container">
         <div class="input-lg-container">
           <label>CARDHOLDER NAME</label>
@@ -23,17 +27,17 @@ import CardBack from "./components/Card-back.vue";
         <div class="input-sm-container">
           <label class="input-md">EXP.DATE (MM/YY)</label>
           <label class="input-md-2">CVC</label>
-          <input class="input-sm" type="text" v-model="expDateM" placeholder="MM">
+          <input class="input-sm" type="text" v-model="expDateM" placeholder="MM" id="round">
           <input class="input-sm-2" type="text" v-model="expDateY" placeholder="YY">
           <input class="input-md-2" type="text" v-model="cvc" placeholder="e.g. 123">
         </div>
         <button class="btn-confirm">Confirm</button>
       </div>
-    </section>
+    </div>
     <div class="card-container">
       <div class="card-mask">
-        <card-front class="card"></card-front>
-        <card-back class="card-2"></card-back>
+        <card-front class="card-front"></card-front>
+        <card-back class="card-back"></card-back>
       </div>
     </div>
   </div>
@@ -46,20 +50,22 @@ import CardBack from "./components/Card-back.vue";
 
   .card-container {
     position: fixed;
-    width: 40%;
-    top: 20%;
-    left: 10%;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     .card-mask {
-      width: 70%;
+      width: 40rem;
 
-      .card {
+      .card-front {
         width: 100%;
       }
 
-      .card-2 {
+      .card-back {
         width: 100%;
-        margin: 1.5rem 0rem 0rem 5rem;
+        margin: 3rem 0rem 0rem 5rem;
       }
     }
   }
@@ -72,25 +78,31 @@ import CardBack from "./components/Card-back.vue";
     align-items: center;
 
     .form-container {
-      width: 45%;
+      width: 40%;
       display: grid;
       gap: 1.8rem;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       margin-left: 5rem;
 
       input {
-        padding: 0.7rem 0rem 0.7rem 1rem;
-        border: 0.1px solid var(--dark-grayish-violet);
+        padding: 1.2rem 0rem 1.2rem 1.4rem;
+        border: 1px solid var(--light-grayish-violet);
         border-radius: 10px;
+        outline: none;
         color: var(--very-dark-violet);
-        font-weight: 500;
         letter-spacing: 1px;
+        font-size: 1.6rem;
+        transition: border 0.5s;
+
+        &:focus {
+          border: 1px solid var(--very-dark-violet);
+        }
       }
 
       label {
-        font-size: 13px;
+        font-size: 1.2rem;
         font-weight: bolder;
-        letter-spacing: 2px;
+        letter-spacing: 0.2rem;
       }
 
       .input-lg-container {
