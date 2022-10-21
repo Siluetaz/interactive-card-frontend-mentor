@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    hola
+    <img class="card" src="../../images/bg-card-back.png" alt="">
 </template>
 
 <style lang="scss" scoped>
