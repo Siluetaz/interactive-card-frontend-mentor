@@ -2,7 +2,11 @@
 import { ref, onMounted } from 'vue'
 import CardFront from "./components/Card-front.vue";
 import CardBack from "./components/Card-back.vue";
-
+let name = ref("")
+let number = ref("")
+let expDateM = ref("")
+let expDateY = ref("")
+let cvc = ref("")
 onMounted(() => {
   //document.getElementById("round").style.border = "1px solid hsl(278, 68%, 11%)";
 })
@@ -22,21 +26,22 @@ onMounted(() => {
         </div>
         <div class="input-lg-container">
           <label>CARD NUMBER</label>
-          <input type="text" v-model="number" placeholder="e.g. 1234 5678 9123 0000">
+          <input type="number" v-model="number" placeholder="e.g. 1234 5678 9123 0000">
         </div>
         <div class="input-sm-container">
           <label class="input-md">EXP.DATE (MM/YY)</label>
           <label class="input-md-2">CVC</label>
-          <input class="input-sm" type="text" v-model="expDateM" placeholder="MM" id="round">
-          <input class="input-sm-2" type="text" v-model="expDateY" placeholder="YY">
-          <input class="input-md-2" type="text" v-model="cvc" placeholder="e.g. 123">
+          <input class="input-sm" type="number" v-model="expDateM" placeholder="MM" id="round">
+          <input class="input-sm-2" type="number" v-model="expDateY" placeholder="YY">
+          <input class="input-md-2" type="number" v-model="cvc" placeholder="e.g. 123">
         </div>
         <button class="btn-confirm">Confirm</button>
       </div>
     </div>
     <div class="card-container">
       <div class="card-mask">
-        <card-front class="card-front"></card-front>
+        <card-front class="card-front" :name="name" :number="number" :expDateM="expDateM" :expDateY="expDateY">
+        </card-front>
         <card-back class="card-back"></card-back>
       </div>
     </div>
@@ -172,5 +177,15 @@ onMounted(() => {
     }
 
   }
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
 }
 </style>

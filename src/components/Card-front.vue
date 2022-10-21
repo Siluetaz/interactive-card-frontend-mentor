@@ -1,10 +1,36 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { stringify } from 'postcss';
+import { ref, onMounted, watch } from 'vue'
 
+const props = defineProps({
+    name: String,
+    number: Number,
+    expDateM: Number,
+    expDateM: Number
+})
 let number = ref("0000 0000 0000 0000")
 let name = ref("JANE APPLESEED")
 let expDate = ref("00/00")
+onMounted(() => {
+})
 
+watch(props, (newProps) => {
+    if (newProps.name !== '') {
+
+        name.value = newProps.name
+    }
+    if (newProps.number !== '') {
+        let lastNumber = newProps.number.toString().charAt(newProps.number.toString().length - 1)
+        number.value = number.value.replace(/0/, lastNumber)
+    }
+    if (newProps.expDateM !== '') {
+
+        let date = expDate.value.split('/')
+        date[0] = newProps.expDateM
+        date[1] = newProps.expDateY
+        expDate.value = date[0] + "/" + date[1]
+    }
+})
 </script>
 
 <template>
