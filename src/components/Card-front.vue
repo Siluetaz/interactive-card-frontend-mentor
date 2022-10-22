@@ -1,35 +1,39 @@
 <script setup>
-import { stringify } from 'postcss';
 import { ref, onMounted, watch } from 'vue'
 
 const props = defineProps({
     name: String,
-    number: Number,
-    expDateM: Number,
-    expDateM: Number
+    number: String,
+    expDateM: String,
+    expDateY: String,
+    pressed: String
 })
 let number = ref("0000 0000 0000 0000")
 let name = ref("JANE APPLESEED")
-let expDate = ref("00/00")
+let expDate = ref("MM/YY")
 onMounted(() => {
 })
 
 watch(props, (newProps) => {
-    if (newProps.name !== '') {
 
-        name.value = newProps.name
+    name.value = newProps.name
+    if (name.value === "") {
+        name.value = "JANE APPLESEED"
     }
-    if (newProps.number !== '') {
-        let lastNumber = newProps.number.toString().charAt(newProps.number.toString().length - 1)
-        number.value = number.value.replace(/0/, lastNumber)
-    }
-    if (newProps.expDateM !== '') {
 
-        let date = expDate.value.split('/')
-        date[0] = newProps.expDateM
-        date[1] = newProps.expDateY
-        expDate.value = date[0] + "/" + date[1]
-    }
+    number.value = '0000 0000 0000 0000'
+    number.value = newProps.number + number.value.substring(newProps.number.length, 19)
+
+
+    let date = expDate.value.split('/')
+
+    date[0] = 'MM'
+    date[0] = newProps.expDateM + date[0].substring(newProps.expDateM.length, 2)
+    expDate.value = date[0] + "/" + date[1]
+
+    date[1] = 'YY'
+    date[1] = newProps.expDateY + date[1].substring(newProps.expDateY.length, 2)
+    expDate.value = date[0] + "/" + date[1]
 })
 </script>
 
@@ -50,7 +54,7 @@ watch(props, (newProps) => {
     input {
         background: none;
         border: none;
-        color: var(--light-grayish-violet);
+        color: var(--white);
     }
 
     position: relative;
@@ -64,18 +68,12 @@ watch(props, (newProps) => {
         width: 100%;
         height: 100%;
 
-        // background-color: red;
-        // display: grid;
-        // grid-template-columns: repeat(4);
-        // grid-template-rows: repeat(2);
         .input-lg {
-            // grid-column: 1/5;
             position: absolute;
             bottom: 6rem;
             width: 100%;
             font-size: 2.6rem;
             letter-spacing: 0.25rem;
-            font-weight: 600;
             text-align: center;
         }
 
@@ -83,9 +81,10 @@ watch(props, (newProps) => {
             position: absolute;
             bottom: 2rem;
             left: 3.5rem;
-            width: 40%;
+            width: 60%;
             font-size: 1.3rem;
             letter-spacing: 0.15rem;
+            text-transform: uppercase;
         }
 
         .input-sm {
