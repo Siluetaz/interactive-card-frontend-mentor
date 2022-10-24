@@ -3,10 +3,8 @@ import { ref, onMounted, watch } from 'vue'
 const props = defineProps({
     state: Boolean,
 })
-const actionContinue = () => {
-    document.getElementById("form").style.display = "grid"
-    document.getElementById("complete-state").style.display = "none"
-}
+
+
 onMounted(() => {
 })
 </script>

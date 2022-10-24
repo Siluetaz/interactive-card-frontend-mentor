@@ -97,7 +97,7 @@ const validateOnlyNumber = (newValue, input) => {
 
 
 const actionConfirm = () => {
-  if (!state) {
+  if (!state.value) {
     name.value = ""
     number.value = ""
     expDateM.value = ""
@@ -116,9 +116,18 @@ onMounted(() => {
 <template>
   <div class="container">
     <div class="left-side">
-      <div class="bg-mask"><img class="bg-desktop" src="../images/bg-main-desktop.png" /></div>
     </div>
     <div class="right-side">
+      <div class="card-container">
+        <div class="card-mask-front">
+          <card-front class="card-front" :name="name" :number="number" :expDateM="expDateM" :expDateY="expDateY">
+          </card-front>
+        </div>
+        <div class="card-mask-back">
+          <card-back class="card-back" :cvc="cvc"></card-back>
+        </div>
+
+      </div>
       <div :class="[state ? 'form-container' : 'none']">
         <div class="input-lg-container">
           <label>CARDHOLDER NAME</label>
@@ -164,13 +173,6 @@ onMounted(() => {
       <complete-state :class="[!state ? '' : 'none']" @actionConfirm="actionConfirm">
       </complete-state>
     </div>
-    <div class="card-container">
-      <div class="card-mask">
-        <card-front class="card-front" :name="name" :number="number" :expDateM="expDateM" :expDateY="expDateY">
-        </card-front>
-        <card-back class="card-back" :cvc="cvc"></card-back>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -179,41 +181,40 @@ onMounted(() => {
   display: flex;
   height: 100%;
 
-  .card-container {
-    position: fixed;
-    width: 50%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    .card-mask {
-      width: 40rem;
-
-      .card-front {
-        width: 100%;
-      }
-
-      .card-back {
-        width: 100%;
-        margin: 3rem 0rem 0rem 5rem;
-      }
-    }
-  }
-
   .right-side {
     width: 100%;
     height: 100%;
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(11, minmax(0, 1fr));
     align-items: center;
 
+    .card-container {
+      grid-column: 1/7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4rem;
+      margin-right: 5rem;
+
+      .card-mask-front {
+        width: 40rem;
+
+      }
+
+      .card-mask-back {
+        width: 40rem;
+        margin-left: 10rem;
+
+
+      }
+    }
+
     .form-container {
-      width: 35%;
+      grid-column: 7/10;
+      height: fit-content;
       display: grid;
       gap: 2.2rem;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      margin-left: 5rem;
 
       .grid-column {
         grid-column: 1/5;
@@ -307,20 +308,12 @@ onMounted(() => {
 
 
   .left-side {
-    width: 45%;
+    position: absolute;
+    z-index: -1;
+    width: 35%;
     height: 100%;
-    max-width: 45%;
-
-    .bg-mask {
-      height: 100%;
-      overflow: hidden;
-
-      .bg-desktop {
-        width: 100%;
-        height: 100%;
-      }
-    }
-
+    background-image: url(../images/bg-main-desktop.png);
+    background-size: cover;
   }
 }
 
@@ -334,5 +327,60 @@ onMounted(() => {
 
 .none {
   display: none;
+}
+
+@media screen and (max-width: 850px) {
+  .container {
+    flex-direction: column;
+
+    .left-side {
+      height: 34%;
+      width: 100%;
+      background-image: url(../images/bg-main-mobile.png);
+      background-size: cover;
+    }
+
+    .right-side {
+      display: grid;
+      grid-template-columns: repeat(11, minmax(0, 1fr));
+      grid-template-rows: repeat(5, minmax(0, 1fr));
+      align-items: center;
+      row-gap: 0rem;
+
+      .card-container {
+        grid-column: 1/12;
+        grid-row: 1/3;
+        display: grid;
+        gap: 0rem;
+        margin-right: 0rem;
+        grid-template-rows: repeat(11, minmax(0, 1fr));
+        grid-template-columns: repeat(15, minmax(0, 1fr));
+        row-gap: 3.08rem;
+        justify-items: center;
+        .card-mask-front {
+          grid-column: 3/12;
+          grid-row: 5/12;
+          width: 30rem;
+        }
+
+        .card-mask-back {
+          grid-column: 5/14;
+          grid-row: 2/9;
+          width: 30rem;
+          margin-left: 0rem;
+          z-index: -1;
+        }
+      }
+
+      .form-container {
+        grid-column: 2/11;
+        grid-row: 3/6;
+        height: fit-content;
+        display: grid;
+        gap: 2.2rem;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+  }
 }
 </style>

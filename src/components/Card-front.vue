@@ -5,8 +5,7 @@ const props = defineProps({
     name: String,
     number: String,
     expDateM: String,
-    expDateY: String,
-    pressed: String
+    expDateY: String
 })
 let number = ref("0000 0000 0000 0000")
 let name = ref("JANE APPLESEED")
@@ -15,7 +14,6 @@ onMounted(() => {
 })
 
 watch(props, (newProps) => {
-
     name.value = newProps.name
     if (name.value === "") {
         name.value = "JANE APPLESEED"
@@ -37,10 +35,12 @@ watch(props, (newProps) => {
 </script>
 
 <template>
-    <div class="container">
+    <div class="container-front">
         <img class="img-card" src="../../images/bg-card-front.png" alt="">
         <div class="content">
-            <img class="img-logo" src="../../images/card-logo.svg" alt="">
+            <div class="img-logo">
+                <img src="../../images/card-logo.svg" alt="">
+            </div>
             <input class="input-lg" type="text" v-model="number" disabled>
             <input class="input-md" type="text" v-model="name" disabled>
             <input class="input-sm" type="text" v-model="expDate" disabled>
@@ -49,13 +49,14 @@ watch(props, (newProps) => {
 </template>
 
 <style lang="scss" scoped>
-.container {
-    input {
-        background: none;
-        border: none;
-        color: var(--white);
-    }
+input {
+    background: none;
+    border: none;
+    color: var(--white);
+}
 
+.container-front {
+    display: flex;
     position: relative;
 
     .img-card {
@@ -66,40 +67,99 @@ watch(props, (newProps) => {
         position: absolute;
         width: 100%;
         height: 100%;
+        display: grid;
+        grid-template-rows: repeat(11, minmax(0, 1fr));
+        grid-template-columns: repeat(11, minmax(0, 1fr));
+
+        .img-logo {
+            grid-column: 1/5;
+            grid-row: 1/7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
         .input-lg {
-            position: absolute;
-            bottom: 6rem;
-            width: 100%;
+            grid-column: 1/12;
+            grid-row: 6/10;
             font-size: 2.6rem;
             letter-spacing: 0.25rem;
             text-align: center;
         }
 
         .input-md {
-            position: absolute;
-            bottom: 2rem;
-            left: 3.5rem;
-            width: 60%;
+            grid-column: 2/8;
+            grid-row: 9/12;
             font-size: 1.3rem;
             letter-spacing: 0.15rem;
             text-transform: uppercase;
+            text-align: start;
         }
 
         .input-sm {
-            position: absolute;
-            bottom: 2rem;
-            right: 0.1rem;
-            width: 18%;
+            grid-column: 9/12;
+            grid-row: 9/12;
             font-size: 1.3rem;
             letter-spacing: 0.15rem;
+            text-align: center;
         }
 
-        .img-logo {
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .container-front {
+        display: flex;
+        position: relative;
+
+        .img-card {
+            width: 100%;
+        }
+
+        .content {
             position: absolute;
-            top: 2.8rem;
-            left: 2.8rem;
-            width: 8rem;
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-rows: repeat(11, minmax(0, 1fr));
+            grid-template-columns: repeat(11, minmax(0, 1fr));
+
+            .img-logo {
+                grid-column: 1/5;
+                grid-row: 1/7;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                img{
+                    width: 6.5rem;
+                }
+            }
+
+            .input-lg {
+                grid-column: 1/12;
+                grid-row: 6/10;
+                font-size: 1.78rem;
+                letter-spacing: 0.25rem;
+                text-align: center;
+            }
+
+            .input-md {
+                grid-column: 2/8;
+                grid-row: 9/12;
+                font-size: 1rem;
+                letter-spacing: 0.15rem;
+                text-transform: uppercase;
+                text-align: start;
+            }
+
+            .input-sm {
+                grid-column: 9/12;
+                grid-row: 9/12;
+                font-size: 1rem;
+                letter-spacing: 0.15rem;
+                text-align: center;
+            }
+
         }
     }
 }
