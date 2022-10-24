@@ -27,7 +27,6 @@ node_modules
 dist
 dist-ssr
 *.local
-design
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -38,3 +37,4 @@ design
 *.njsproj
 *.sln
 *.sw?
+design
