@@ -1,18 +1,18 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue'
-
+const props = defineProps({
+    state: Boolean,
+})
 const actionContinue = () => {
     document.getElementById("form").style.display = "grid"
     document.getElementById("complete-state").style.display = "none"
 }
-
 onMounted(() => {
-    //document.getElementById("round").style.border = "1px solid hsl(278, 68%, 11%)";
 })
 </script>
 
 <template>
-    <div class="complete-state-container" id="complete-state">
+    <div class="complete-state-container">
         <div class="centered img-mask">
             <img class="icon-complete" src="../../images/icon-complete.svg" alt="">
         </div>
@@ -25,7 +25,7 @@ onMounted(() => {
 <style lang="scss">
 .complete-state-container {
     width: 35%;
-    display: none;
+    display: grid;
     gap: 1.8rem;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     margin-left: 5rem;
@@ -72,5 +72,8 @@ onMounted(() => {
             background-color: var(--hover-btn-violet);
         }
     }
+
+}.none {
+    display: none !important;
 }
 </style>

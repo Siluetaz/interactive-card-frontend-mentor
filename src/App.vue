@@ -1,100 +1,115 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 import CardFront from "./components/Card-front.vue";
 import CardBack from "./components/Card-back.vue";
 import CompleteState from './components/Complete-state.vue';
+
 let name = ref("")
 let number = ref("")
 let expDateM = ref("")
 let expDateY = ref("")
 let cvc = ref("")
 let index = ref(0)
-let state = ref(0)
+let state = ref(true)
 let oneCicle = ref(false)
-let errors = ref({
-  input: "",
-  error: ""
-})
-const validateNumber = (newNumber, input) => {
-  if (newNumber.length === 5 || newNumber.length === 10 || newNumber.length === 15) {
-    return newNumber
-  }
-  if (newNumber.charAt(newNumber.length - 1).search(/[0-9]/g)) {
-    newNumber = newNumber.substring(0, newNumber.length - 1);
-    errors.value.error = "Wrong format, numbers only"
-    errors.value.input = input
-  }
-  return newNumber
+let errors = ref([])
 
+const validateBlank = () => {
+  if (name.value === "") {
+    errors.value.push({ input: 'name', error: "Can't be blank" })
+  }
+  if (number.value === "") {
+    errors.value.push({ input: 'number', error: "Can't be blank" })
+  }
+  if (expDateM.value === "") {
+    errors.value.push({ input: 'expDateM', error: "Can't be blank" })
+  }
+  if (expDateY.value === "") {
+    errors.value.push({ input: 'expDateY', error: "Can't be blank" })
+  }
+  if (cvc.value === "") {
+    errors.value.push({ input: 'cvc', error: "Can't be blank" })
+  }
+}
+const validateLarge = (newValue, input) => {
+  let large = newValue.length
+}
+const validateLetter = (newValue, input) => {
+
+  let large = newValue.length
+  if (large !== 0) {
+    if (newValue.charAt(large - 1).search(/[A-Za-z ]/g)) {
+      newValue = newValue.substring(0, large - 1);
+      errors.value.push({ input: input, error: "Wrong format, letters only" })
+    } else {
+      errors.value = errors.value.filter(error => error.input !== input)
+    }
+
+  }
+  return newValue
+}
+const validateInputNumber = (newValue, input) => {
+  let large = newValue.length
+  if (large !== 0) {
+    switch (large) {
+      case 4:
+        if (index.value < 5) {
+          newValue += " "
+        }
+        break;
+      case 9:
+        if (index.value < 10) {
+          newValue += " "
+        }
+        break;
+      case 14:
+        if (index.value < 15) {
+          newValue += " "
+        }
+        break;
+    }
+    if (large !== 5 && large !== 10 && large !== 15) {
+      if (newValue.charAt(large - 1).search(/[0-9]/g)) {
+        newValue = newValue.substring(0, large - 1);
+        errors.value.push({ input: input, error: "Wrong format, numbers only" })
+      } else {
+        errors.value = errors.value.filter(error => error.input !== input)
+      }
+    }
+
+
+  }
+  index.value = newValue.length
+  return newValue
+}
+const validateOnlyNumber = (newValue, input) => {
+  let large = newValue.length
+  if (large !== 0) {
+    if (newValue.charAt(large - 1).search(/[0-9]/g)) {
+      newValue = newValue.substring(0, large - 1);
+      errors.value.push({ input: input, error: "Wrong format, numbers only" })
+    } else {
+      errors.value = errors.value.filter(error => error.input !== input)
+    }
+  }
+  return newValue
 }
 
+
 const actionConfirm = () => {
-  if (state.value === 0) {
-    document.getElementById("form").style.display = "none"
-    document.getElementById("complete-state").style.display = "grid"
-    state.value = 1
-  } else {
-
-    document.getElementById("form").style.display = "grid"
-    document.getElementById("complete-state").style.display = "none"
-    state.value = 0
-
+  if (!state) {
     name.value = ""
     number.value = ""
     expDateM.value = ""
     expDateY.value = ""
     cvc.value = ""
   }
+  if (errors.value.length === 0) {
+    state.value = !state.value
+  }
 }
 
 onMounted(() => {
-})
-
-const validateChar = (char) => {
-  if (char.charAt(char.length - 1).search(/[0-9]/g)) {
-    char = char.substring(0, char.length - 1);
-  }
-  return char
-}
-watch(name, (newName) => {
-  if (newName.charAt(newName.length - 1).search(/[A-Za-z ]/g)) {
-    name.value = newName.substring(0, newName.length - 1);
-  }
-})
-watch(expDateY, (newExpDateY) => {
-  expDateY.value = validateChar(newExpDateY)
-})
-watch(expDateM, (newExpDateM) => {
-  if (parseInt(newExpDateM) > 12) {
-    newExpDateM = "12"
-  }
-  expDateM.value = validateChar(newExpDateM)
-})
-watch(cvc, (newCvc) => {
-  cvc.value = validateChar(newCvc)
-})
-
-watch(number, (newNumber) => {
-  newNumber = validateNumber(newNumber, "number")
-  switch (newNumber.length) {
-    case 4:
-      if (index.value < 5) {
-        newNumber += " "
-      }
-      break;
-    case 9:
-      if (index.value < 10) {
-        newNumber += " "
-      }
-      break;
-    case 14:
-      if (index.value < 15) {
-        newNumber += " "
-      }
-      break;
-  }
-  index.value = newNumber.length
-  number.value = newNumber
 })
 </script>
 
@@ -104,28 +119,50 @@ watch(number, (newNumber) => {
       <div class="bg-mask"><img class="bg-desktop" src="../images/bg-main-desktop.png" /></div>
     </div>
     <div class="right-side">
-      <div class="form-container" id="form">
+      <div :class="[state ? 'form-container' : 'none']">
         <div class="input-lg-container">
           <label>CARDHOLDER NAME</label>
-          <input type="text" v-model="name" placeholder="e.g. Jane Appleseed" required>
+          <input :class="[errors.find((x) => x.input === 'name') ? 'error' : '']" type="text" v-model="name"
+            @input="name = validateLetter(name, 'name')" placeholder="e.g. Jane Appleseed" required>
+          <span class="error-messagge" v-if="errors.find((x) => x.input === 'name')">{{ errors.find((x) => x.input ===
+              'name').error
+          }}</span>
         </div>
         <div class="input-lg-container">
           <label>CARD NUMBER</label>
-          <input :class="[errors.input === 'number' ? 'error' : '']" type="text" v-model="number" placeholder="e.g. 1234 5678 9123 0000" maxlength="19" @focusout="errors.error = ''">
-          <span class="error-messagge" v-if="errors.error !== ''">{{errors.error}}</span>
+          <input :class="[errors.find((x) => x.input === 'number') ? 'error' : '']" type="text"
+            placeholder="e.g. 1234 5678 9123 0000" maxlength="19" v-model="number"
+            @input="number = validateInputNumber(number, 'number')">
+          <span class="error-messagge" v-if="errors.find((x) => x.input === 'number')">{{ errors.find((x) => x.input ===
+              'number').error
+          }}</span>
         </div>
         <div class="input-sm-container">
           <label class="input-md">EXP.DATE (MM/YY)</label>
           <label class="input-md-2">CVC</label>
-          <input class="input-sm" type="text" v-model="expDateM" placeholder="MM" id="round" maxlength="2" required>
-          <input class="input-sm-2" type="text" v-model="expDateY" placeholder="YY" maxlength="2" required>
-          <input class="input-md-2" type="text" v-model="cvc" placeholder="e.g. 123" maxlength="3" required>
+
+          <input :class="['input-sm', errors.find((x) => x.input === 'expDateM') ? 'error' : '']" type="text"
+            v-model="expDateM" @input="expDateM = validateOnlyNumber(expDateM, 'expDateM')" placeholder="MM"
+            maxlength="2" required>
+
+          <input :class="['input-sm-2', errors.find((x) => x.input === 'expDateY') ? 'error' : '']" type="text"
+            v-model="expDateY" @input="expDateY = validateOnlyNumber(expDateY, 'expDateY')" placeholder="YY"
+            maxlength="2" required>
+
+          <input :class="['input-md-2', errors.find((x) => x.input === 'cvc') ? 'error' : '']" type="text" v-model="cvc"
+            @input="cvc = validateOnlyNumber(cvc, 'cvc')" placeholder="e.g. 123" maxlength="3" required>
+
+
+          <span class="error-messagge text-center"
+            v-if="errors.find((x) => x.input === 'expDateM' || x.input === 'cvc' || x.input === 'expDateY')">
+            {{ errors.find((x) => x.input === 'expDateM' || x.input === 'cvc' || x.input === 'expDateY').error }}</span>
         </div>
         <div class="grid-column">
-          <button class="btn-confirm" @click="actionConfirm">Confirm</button>
+          <button class="btn-confirm" @click="validateBlank(); actionConfirm()">Confirm</button>
         </div>
       </div>
-      <complete-state id="complete-state" class="complete-state" @actionConfirm="actionConfirm"></complete-state>
+      <complete-state :class="[!state ? '' : 'none']" @actionConfirm="actionConfirm">
+      </complete-state>
     </div>
     <div class="card-container">
       <div class="card-mask">
@@ -187,6 +224,7 @@ watch(number, (newNumber) => {
       .error-messagge {
         font-size: 1.2rem;
         color: var(--input-errors);
+        grid-column: 1/9;
       }
 
       input {
@@ -198,6 +236,7 @@ watch(number, (newNumber) => {
         letter-spacing: 1px;
         font-size: 1.6rem;
         transition: border 0.5s;
+
 
         &:focus {
           border: 1px solid var(--very-dark-violet);
@@ -215,11 +254,7 @@ watch(number, (newNumber) => {
         flex-direction: column;
         grid-column: 1/5;
         gap: 0.5rem;
-        .error {
-            &:focus {
-              border: 1px solid var(--input-errors);
-            }
-          }
+
       }
 
 
@@ -268,11 +303,6 @@ watch(number, (newNumber) => {
       }
 
     }
-
-    .complete-state {
-
-      display: none;
-    }
   }
 
 
@@ -292,5 +322,17 @@ watch(number, (newNumber) => {
     }
 
   }
+}
+
+.error {
+  border: 1px solid var(--input-errors) !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.none {
+  display: none;
 }
 </style>

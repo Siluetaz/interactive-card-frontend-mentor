@@ -20,7 +20,6 @@ watch(props, (newProps) => {
     if (name.value === "") {
         name.value = "JANE APPLESEED"
     }
-
     number.value = '0000 0000 0000 0000'
     number.value = newProps.number + number.value.substring(newProps.number.length, 19)
 
