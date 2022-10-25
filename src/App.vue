@@ -104,9 +104,9 @@ const actionConfirm = () => {
     expDateY.value = ""
     cvc.value = ""
   }
-  if (errors.value.length === 0) {
+  if (errors.value.length === 0)
     state.value = !state.value
-  }
+
 }
 
 onMounted(() => {
@@ -177,6 +177,10 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
+main {
+  height: 100vh;
+}
+
 .container {
   display: flex;
   height: 100%;
@@ -197,21 +201,20 @@ onMounted(() => {
       margin-right: 5rem;
 
       .card-mask-front {
-        width: 40rem;
-
+        width: 400px;
+        height: 219.24px;
       }
 
       .card-mask-back {
-        width: 40rem;
+        width: 400px;
+        height: 219.24px;
         margin-left: 10rem;
-
 
       }
     }
 
     .form-container {
       grid-column: 7/10;
-      height: fit-content;
       display: grid;
       gap: 2.2rem;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -226,6 +229,8 @@ onMounted(() => {
         font-size: 1.2rem;
         color: var(--input-errors);
         grid-column: 1/9;
+        animation-name: bounce;
+        animation-duration: 0.4s;
       }
 
       input {
@@ -237,7 +242,6 @@ onMounted(() => {
         letter-spacing: 1px;
         font-size: 1.6rem;
         transition: border 0.5s;
-
 
         &:focus {
           border: 1px solid var(--very-dark-violet);
@@ -297,6 +301,7 @@ onMounted(() => {
         letter-spacing: 0.08rem;
         margin-top: 2rem;
         cursor: pointer;
+        transition: 0.3s;
 
         &:hover {
           background-color: var(--hover-btn-violet);
@@ -314,11 +319,15 @@ onMounted(() => {
     height: 100%;
     background-image: url(../images/bg-main-desktop.png);
     background-size: cover;
+    animation-name: appearForm;
+    animation-duration: 1.4s;
   }
 }
 
 .error {
   border: 1px solid var(--input-errors) !important;
+  animation-name: bounceInput;
+  animation-duration: 0.4s;
 }
 
 .text-center {
@@ -337,7 +346,8 @@ onMounted(() => {
       height: 34%;
       width: 100%;
       background-image: url(../images/bg-main-mobile.png);
-      background-size: cover;
+      background-size: cover;animation-name: appearForm1;
+        animation-duration: 1.4s;
     }
 
     .right-side {
@@ -357,16 +367,20 @@ onMounted(() => {
         grid-template-columns: repeat(15, minmax(0, 1fr));
         row-gap: 3.08rem;
         justify-items: center;
+
         .card-mask-front {
           grid-column: 3/12;
           grid-row: 5/12;
-          width: 30rem;
+          width: 300px;
+          height: 164.243px;
+          margin-top: 0.2rem;
         }
 
         .card-mask-back {
           grid-column: 5/14;
           grid-row: 2/9;
-          width: 30rem;
+          width: 300px;
+          height: 164.243px;
           margin-left: 0rem;
           z-index: -1;
         }
@@ -377,8 +391,12 @@ onMounted(() => {
         grid-row: 3/6;
         height: fit-content;
         display: grid;
-        gap: 2.2rem;
+        gap: 2rem;
         grid-template-columns: repeat(4, minmax(0, 1fr));
+
+        .btn-confirm {
+          margin-top: 0rem;
+        }
       }
     }
   }

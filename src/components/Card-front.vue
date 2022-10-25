@@ -36,7 +36,8 @@ watch(props, (newProps) => {
 
 <template>
     <div class="container-front">
-        <img class="img-card" src="../../images/bg-card-front.png" alt="">
+        <div class="img-card">
+        </div>
         <div class="content">
             <div class="img-logo">
                 <img src="../../images/card-logo.svg" alt="">
@@ -58,18 +59,28 @@ input {
 .container-front {
     display: flex;
     position: relative;
+    width: 100%;
+    height: 100%;
 
     .img-card {
-        width: 100%;
+        width: inherit;
+        height: inherit;
+        box-shadow: 0px 0px 10px 0px var(--very-dark-violet);
+        background-image: url(../../images/bg-card-front.png);
+        border-radius: 11px;
+        background-size: cover;
     }
 
     .content {
+        animation-name: appearInfo;
+        animation-duration: 1s;
         position: absolute;
         width: 100%;
         height: 100%;
         display: grid;
         grid-template-rows: repeat(11, minmax(0, 1fr));
         grid-template-columns: repeat(11, minmax(0, 1fr));
+        overflow: hidden;
 
         .img-logo {
             grid-column: 1/5;
@@ -80,11 +91,10 @@ input {
         }
 
         .input-lg {
-            grid-column: 1/12;
+            grid-column: 2/12;
             grid-row: 6/10;
             font-size: 2.6rem;
             letter-spacing: 0.25rem;
-            text-align: center;
         }
 
         .input-md {
@@ -97,69 +107,36 @@ input {
         }
 
         .input-sm {
-            grid-column: 9/12;
+            grid-column: 10/12;
             grid-row: 9/12;
             font-size: 1.3rem;
             letter-spacing: 0.15rem;
-            text-align: center;
         }
 
     }
 }
 
+
 @media screen and (max-width: 850px) {
     .container-front {
-        display: flex;
-        position: relative;
-
-        .img-card {
-            width: 100%;
-        }
-
         .content {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: grid;
-            grid-template-rows: repeat(11, minmax(0, 1fr));
-            grid-template-columns: repeat(11, minmax(0, 1fr));
-
             .img-logo {
-                grid-column: 1/5;
-                grid-row: 1/7;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                img{
+                img {
                     width: 6.5rem;
                 }
             }
 
             .input-lg {
-                grid-column: 1/12;
-                grid-row: 6/10;
                 font-size: 1.78rem;
-                letter-spacing: 0.25rem;
-                text-align: center;
             }
 
             .input-md {
-                grid-column: 2/8;
-                grid-row: 9/12;
                 font-size: 1rem;
-                letter-spacing: 0.15rem;
-                text-transform: uppercase;
-                text-align: start;
             }
 
             .input-sm {
-                grid-column: 9/12;
-                grid-row: 9/12;
                 font-size: 1rem;
-                letter-spacing: 0.15rem;
-                text-align: center;
             }
-
         }
     }
 }

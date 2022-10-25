@@ -16,7 +16,8 @@ watch(props, (newProps) => {
 
 <template>
     <div class="container-back">
-        <img class="img-card" src="../../images/bg-card-back.png" alt="">
+        <div class="img-card">
+        </div>
         <div class="content">
             <input class="input-lg" type="text" v-model="cvc" disabled>
         </div>
@@ -33,9 +34,16 @@ watch(props, (newProps) => {
 
     display: flex;
     position: relative;
+    width: 100%;
+    height: 100%;
 
     .img-card {
-        width: 100%;
+        width: inherit;
+        height: inherit;
+        box-shadow: 0px 0px 10px var(--very-dark-violet);
+        background-image: url(../../images/bg-card-back.png);
+        border-radius: 11px;
+        background-size: cover;
     }
 
     .content {
@@ -47,6 +55,9 @@ watch(props, (newProps) => {
         grid-template-columns: repeat(11, minmax(0, 1fr));
         justify-content: center;
         align-items: center;
+        overflow: hidden;
+        animation-name: appearInfo;
+        animation-duration: 1s;
 
         .input-lg {
             grid-column: 9/11;
@@ -58,9 +69,9 @@ watch(props, (newProps) => {
     }
 }
 
+
 @media screen and (max-width: 850px) {
     .container-back {
-
         .content {
             .input-lg {
                 font-size: 1.2rem;

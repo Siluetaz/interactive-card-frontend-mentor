@@ -1,0 +1,75 @@
+@keyframes appearComplete {
+  0% {
+    font-size: 5rem;
+  }
+
+  100% {
+    font-size: 0rem;
+  }
+}
+
+@keyframes appearForm {
+  0% {
+    height: 0%;
+  }
+
+  100% {
+    height: 100%;
+  }
+}
+
+@keyframes appearForm1 {
+  0% {
+    width: 0%;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes bounceInput {
+  0% {
+    border: 0.5px solid var(--input-errors) !important;
+  }
+
+  30% {
+    border: 1px solid var(--input-errors) !important;
+  }
+
+  72% {
+    border: 0.5px solid var(--input-errors) !important;
+  }
+
+  100% {
+    border: 1px solid var(--input-errors) !important;
+  }
+}
+
+@keyframes bounce {
+  0% {
+    font-size: 1.15rem;
+  }
+
+  30% {
+    font-size: 1.2rem;
+  }
+
+  72% {
+    font-size: 1.15rem;
+  }
+
+  100% {
+    font-size: 1.2rem;
+  }
+}
+
+@keyframes appearInfo {
+    0% {
+        width: 0%;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
