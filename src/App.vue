@@ -341,21 +341,22 @@ main {
 @media screen and (max-width: 850px) {
   .container {
     flex-direction: column;
+    height: initial;
 
     .left-side {
-      height: 34%;
+      height: 25rem;
       width: 100%;
       background-image: url(../images/bg-main-mobile.png);
-      background-size: cover;animation-name: appearForm1;
-        animation-duration: 1.4s;
+      background-size: cover;
+      animation-name: appearForm1;
+      animation-duration: 1.4s;
     }
 
     .right-side {
       display: grid;
       grid-template-columns: repeat(11, minmax(0, 1fr));
-      grid-template-rows: repeat(5, minmax(0, 1fr));
       align-items: center;
-      row-gap: 0rem;
+      row-gap: 2rem;
 
       .card-container {
         grid-column: 1/12;
@@ -388,7 +389,7 @@ main {
 
       .form-container {
         grid-column: 2/11;
-        grid-row: 3/6;
+        grid-row: 3/5;
         height: fit-content;
         display: grid;
         gap: 2rem;
