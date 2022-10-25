@@ -177,13 +177,10 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
-main {
-  height: 100vh;
-}
 
 .container {
   display: flex;
-  height: 100%;
+  height: 100vh;
 
   .right-side {
     width: 100%;
@@ -342,7 +339,6 @@ main {
   .container {
     flex-direction: column;
     height: initial;
-
     .left-side {
       height: 25rem;
       width: 100%;
