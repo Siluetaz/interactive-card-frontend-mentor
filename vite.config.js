@@ -3,6 +3,6 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/interactive-card-frontendMentor/',
+  base: '/interactive-card-frontendMentor/dist/',
   plugins: [vue()]
 })
