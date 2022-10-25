@@ -12,7 +12,7 @@ onMounted(() => {
 <template>
     <div class="complete-state-container">
         <div class="centered img-mask">
-            <img class="icon-complete" src="../../images/icon-complete.svg" alt="">
+            <img class="icon-complete" src="./../../images/icon-complete.svg" alt="">
         </div>
         <label class="centered text-lg">THANK YOU!</label>
         <label class="centered text-sm">We've added your cards details</label>

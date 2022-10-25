@@ -40,7 +40,7 @@ watch(props, (newProps) => {
         </div>
         <div class="content">
             <div class="img-logo">
-                <img src="../../images/card-logo.svg" alt="">
+                <img src="./../../images/card-logo.svg" alt="">
             </div>
             <input class="input-lg" type="text" v-model="number" disabled>
             <input class="input-md" type="text" v-model="name" disabled>
@@ -66,7 +66,7 @@ input {
         width: inherit;
         height: inherit;
         box-shadow: 0px 0px 10px 0px var(--very-dark-violet);
-        background-image: url(../../images/bg-card-front.png);
+        background-image: url(./../../images/bg-card-front.png);
         border-radius: 11px;
         background-size: cover;
     }

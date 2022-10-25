@@ -41,7 +41,7 @@ watch(props, (newProps) => {
         width: inherit;
         height: inherit;
         box-shadow: 0px 0px 10px var(--very-dark-violet);
-        background-image: url(../../images/bg-card-back.png);
+        background-image: url(./../../images/bg-card-back.png);
         border-radius: 11px;
         background-size: cover;
     }
